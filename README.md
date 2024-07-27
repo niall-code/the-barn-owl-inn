@@ -35,7 +35,7 @@ I started a project and then an app:
 >
 > `python3 manage.py startapp home`
 
-In my project's settings file, I added my app to the list of installed apps.
+In `barn_owl_inn/settings.py`, I added 'home' to the list of installed apps.
 
 I ran a server:
 
@@ -51,15 +51,23 @@ On my user stories board, I moved 'Navigate the site' to the In Progress column.
 
 ![site navigation user story](readme_images/navigate_criteria.png)
 
-I created **/templates/base.html** and **/home/templates/home/index.html**, putting HTML boilerplate in the former and `{% extends "base.html" %}` in the latter, which is DTL (Django Templating Language).
+I created `/templates/base.html` and `/home/templates/home/index.html`, putting HTML boilerplate in the former and `{% extends "base.html" %}` in the latter, which is DTL (Django Templating Language).
 
-I also created **/static/css/style.css**, **/static/images**, and **static/js/script.js**. Then, I could add a link element to the head of the base template and give it a href of `{% static 'css/style.css' %}`, ready for applying CSS styles.
+I also created `/static/css/style.css`, `/static/images`, and `static/js/script.js`. Then, I could add a link element to the head of the base template and give it a href of `{% static 'css/style.css' %}`, ready for applying CSS styles.
 
-I like to have a live preview open while styling, to immediately see the changes. Since my project is not wired up yet, style changes were not being reflected, so an additional vanilla HTML link element has been added, which will be removed in due course.
+I like to have a live preview open while styling, to immediately see the changes. Since my project is not wired up yet, style changes were not being reflected, so an additional vanilla HTML link element has been added, which will be removed shortly.
 
 I added an unordered list navigation menu to the base template and styled it in to a navbar.
 
+### Home page
 
+Through a fluid process combining experimenting, reviewing Django debugging messages, and consulting paper notes I had made or other files of code I had written, I managed to get to a point where a bare home page with a navbar is displayed upon running the server.
+
+![home page with navbar](readme_images/bare_home.png)
+
+This entailed additions to `barn_owl_inn/settings.py`, to `barn_owl_inn/urls.py`, the creation of `home/urls.py`, additions to `home/views.py`, to `home/templates/home/index.html`, and to `templates/base.html`, as well as changes to `static/css/styles.css`. All of these insertions and alterations will be captured in the 5th git commit (28 July '24), and are additionally reflected in these handwritten pages that I wrote also for my own future reference:
+
+![code featured in fifth commit](readme_images/fifth_commit.jpg)
 
 ## Deployment Stage
 
