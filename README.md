@@ -45,6 +45,22 @@ I opened it in browser, copied the relevant string from the error message, ended
 
 I will also be changing debug to False before each git commit.
 
+### Base template
+
+On my user stories board, I moved 'Navigate the site' to the In Progress column.
+
+![site navigation user story](readme_images/navigate_criteria.png)
+
+I created **/templates/base.html** and **/home/templates/home/index.html**, putting HTML boilerplate in the former and `{% extends "base.html" %}` in the latter, which is DTL (Django Templating Language).
+
+I also created **/static/css/style.css**, **/static/images**, and **static/js/script.js**. Then, I could add a link element to the head of the base template and give it a href of `{% static 'css/style.css' %}`, ready for applying CSS styles.
+
+I like to have a live preview open while styling, to immediately see the changes. Since my project is not wired up yet, style changes were not being reflected, so an additional vanilla HTML link element has been added, which will be removed in due course.
+
+I added an unordered list navigation menu to the base template and styled it in to a navbar.
+
+
+
 ## Deployment Stage
 
 
