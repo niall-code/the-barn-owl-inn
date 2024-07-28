@@ -69,6 +69,16 @@ This entailed additions to `barn_owl_inn/settings.py`, to `barn_owl_inn/urls.py`
 
 ![code featured in fifth commit](readme_images/fifth_commit.jpg)
 
+### Database Connection
+
+I created a git-ignored `env.py` file, in which I set the URL of a PostgreSQL cloud database and a randomly-generated secret key. If env exists, it is imported in `settings.py`. Settings gets the database URL and secret key from the environment variables.
+
+I activated database tables and registered admin:
+
+> `python3 manage.py migrate`
+>
+> `python3 manage.py createsuperuser`
+
 ## Deployment Stage
 
 
