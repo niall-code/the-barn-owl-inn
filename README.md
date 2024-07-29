@@ -79,6 +79,10 @@ I activated database tables and registered admin:
 >
 > `python3 manage.py createsuperuser`
 
+###
+
+I started 2 more apps, 'menu' and 'reserve', and added them to the installed apps.
+
 ## Deployment Stage
 
 
