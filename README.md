@@ -12,12 +12,16 @@ I sketched initial wireframes of the home page and of the tables selection scree
 
 ![wireframes](readme_images/wireframe.jpg)
 
-### User Stories
+### User Stories/Acceptance Criteria
 
 I planned my user stories and their acceptance criteria on paper, with some conversational assistance from a relative - who has experience of converting ideas in to formulaic written forms. I then transferred them to a GitHub Projects kanban board.
 
 ![drafting User Stories](readme_images/ustory_draft.jpg)
 ![GitHub Projects kanban board](readme_images/kanban_board.png)
+
+### Entity Relationship Diagrams
+
+![entity relationship diagrams](readme_images/erd.jpg)
 
 ## Development Stage
 
@@ -82,6 +86,13 @@ I activated database tables and registered admin:
 ###
 
 I started 2 more apps, 'menu' and 'reserve', and added them to the installed apps.
+
+I moved 'View menu list' and 'Update menu' user stories to In Progress column.
+
+![menu viewing user story](readme_images/menu_view_criteria.png)
+![menu updating user story](readme_images/menu_update_criteria.png)
+
+I began writing my Table, Reservation, and Dish database models in the `models.py` files of the two new apps, drafts of these being reflected in this git commit.
 
 ## Deployment Stage
 
