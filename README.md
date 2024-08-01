@@ -92,7 +92,9 @@ I moved 'View menu list' and 'Update menu' user stories to In Progress column.
 ![menu viewing user story](readme_images/menu_view_criteria.png)
 ![menu updating user story](readme_images/menu_update_criteria.png)
 
-I began writing my Table, Reservation, and Dish database models in the `models.py` files of the two new apps, drafts of these being reflected in this git commit.
+I wrote my Table, Reservation, and Dish models in the appropriate `models.py` files of the two new apps. I then migrated them to the database:
+
+![migrating database models](readme_images/migrate_models_1.png)
 
 ## Deployment Stage
 
