@@ -83,7 +83,7 @@ I activated database tables and registered admin:
 >
 > `python3 manage.py createsuperuser`
 
-###
+### Writing Database Model Classes
 
 I started 2 more apps, 'menu' and 'reserve', and added them to the installed apps.
 
@@ -95,6 +95,38 @@ I moved 'View menu list' and 'Update menu' user stories to In Progress column.
 I wrote my Table, Reservation, and Dish models in the appropriate `models.py` files of the two new apps. I then migrated them to the database:
 
 ![migrating database models](readme_images/migrate_models_1.png)
+
+### Adding Dishes to the Database
+
+I registered the new models in the `admin.py` files of their apps and added a CSRF_TRUSTED_ORIGINS constant to the project's settings file. Then I ran the server and opened in browser, appended `/admin` to the URL, and logged in as the superuser. Now I, the developer, can add a number of example dishes (i.e., instances of the Dish class) to the database, and a future owner could add more just as easily - bringing the 'Update menu' user story close to fulfilment.
+
+![admin panel new dish form](readme_images/add_dish.png)
+
+An existing dish can be edited (to alter the price, for example) in a very similar manner, after selecting it from the dish list in the admin panel as shown here:
+
+![dish list and edit dish form](readme_images/edit_dish.jpg)
+
+#### Input Requirements/Restrictions
+
+By purposefully inputting invalid data while adding new dishes, I manually tested:
+
+- that `unique=True` had done as expected and prevented the name attributes of two different instances of the Dish class (now acting as a database schema) from being identical,
+
+![testing dish name uniqueness](readme_images/unique_dish_name.png)
+
+- that `blank=False` had indeed prevented the course field from being left empty,
+
+![testing dish course requirement](readme_images/course_needed.png)
+
+- that `max_digits=4` prevents an unrealistically high price from being entered, given that two decimal places were included,
+
+![testing dish price requirement](readme_images/price_limited.png)
+
+- and that `decimal_places=2` made a third decimal place invalid, since real-world currency is being represented.
+
+![testing decimal place limit](readme_images/two_decimals.png)
+
+
 
 ## Deployment Stage
 
