@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  <section id="menu" aria-labelledby="top course-1 course-2 course-3">
+
+    <h2 id="top">Menu</h2>
+
+    <div>
+      <h3 id="course-1">Starters</h3>
+
+      {% for starter in starters %}
+        <div class="dish">
+          <span>{{ starter.name }}</span>
+          <span>{{ starter.price }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div>
+      <h3 id="course-2">Main Course</h3>
+
+      {% for main in mains %}
+        <div class="dish">
+          <span>{{ main.name }}</span>
+          <span>{{ main.price }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div>
+      <h3 id="course-3">Desserts</h3>
+
+      {% for dessert in desserts %}
+        <div class="dish">
+          <span>{{ dessert.name }}</span>
+          <span>{{ dessert.price }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+  </section>
+
+{% endblock %}

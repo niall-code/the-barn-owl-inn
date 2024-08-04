@@ -9,6 +9,6 @@ def home_page(request):
 
     return render(
         request,
-        template_name="home/index.html"
+        "home/index.html"
         # { "home": home, },
     )

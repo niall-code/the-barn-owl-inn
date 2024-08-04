@@ -26,3 +26,25 @@ nav ul {
 a:hover {
   color: blue;
 }
+
+#menu h2,
+#menu h3 {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.dish {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+@media screen and (min-width: 900px) {
+  #menu {
+    width: 30%;
+    margin: auto;
+    border: 0.5px solid tan;
+    background-color: blanchedalmond;
+  }
+}

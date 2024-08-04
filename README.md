@@ -59,7 +59,7 @@ I created `/templates/base.html` and `/home/templates/home/index.html`, putting 
 
 I also created `/static/css/style.css`, `/static/images`, and `static/js/script.js`. Then, I could add a link element to the head of the base template and give it a href of `{% static 'css/style.css' %}`, ready for applying CSS styles.
 
-I like to have a live preview open while styling, to immediately see the changes. Since my project is not wired up yet, style changes were not being reflected, so an additional vanilla HTML link element has been added, which will be removed shortly.
+I like to have a live preview open while styling, to immediately see the changes. Since my project was not wired up yet, style changes were not being reflected, so an additional vanilla HTML link element had been added - which was removed shortly after, once it became redundant.
 
 I added an unordered list navigation menu to the base template and styled it in to a navbar.
 
@@ -126,7 +126,23 @@ By purposefully inputting invalid data while adding new dishes, I manually teste
 
 ![testing decimal place limit](readme_images/two_decimals.png)
 
+### Dish List on Menu Page
 
+I began by imitating my notes from `readme_images/fifth_commit.jpg`. This entailed adding URL patterns to `barn_owl_inn/urls.py` (existing) and `menu/urls.py` (new), adding a basic rendering method to `menu/views.py`, creating `menu/templates/menu/menu.html` and having it extend the base template, and adding a href to the Menu link of `templates/base.html`'s navbar.
+
+I went through a period of confusion, trying to replace what I had just written as a placeholder with more suitable "class-based views". A prior 'Django blog walkthrough project' seemingly had left me with the impression that class-based views were required when more than one database entry had to be drawn upon (e.g., thumbnails of all blog posts rather than a specific post, or list of all dishes rather than just one dish). After experimentation, note-checking, and research, I concluded that I was mistaken and my original code before this detour was closer to the solution.
+
+After this return to my initial pathway, I soon managed to get my database's dish objects crudely displaying on the menu page as seen below - principally (on the back end) by adding a curly braces argument to the render method, allowing my `menu.html` file to read the dishes data and show it. This of course was coupled with putting some provisional DTL (Django Templating Language) into the HTML file - a for loop in the `{% %}` logic marker and variables in their `{{ }}` marker.
+
+![basic dish data display](readme_images/dishes_rendered.png)
+
+In the process, I realised that neither of the `views.py` files required a `template_name=` before the file path string.
+
+I still had to work out how to get the starters, main course dishes, and desserts displaying under the appropriate headings. I had the epiphany that my `views.py` file's `menu_page` method could contain multiple variables. In other words, rather than just `dishes = Dish.objects.all()` and then trying to apply logic with DTL, I could and should have three separate variables: `starters = Dish.objects.filter(course=1)`, and so on. All three could be conveyed to the HTML file via the dictionary object that is the third argument of the render method.
+
+To refine the outcome, I added further HTML tags and attributes and styled them in `static/css/style.css`. Some of the HTML has no visual effect but will improve accesibility, particularly `aria-labelledby`.
+
+![improved menu display](readme_images/viewable_menu.png)
 
 ## Deployment Stage
 
