@@ -1,7 +1,13 @@
 {% load static %}
 
+{% url 'admin' as admin_url %}
 {% url 'home' as home_url %}
 {% url 'menu' as menu_url %}
+{% url 'reserve' as reserve_url %}
+
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,10 +30,16 @@
         <ul>
           <li><a href="{% url 'home' %}">Home</a></li>
           <li><a href="{% url 'menu' %}">Menu</a></li>
-          <li><a href="#">Reservations</a></li>
+          <li><a href="{% url 'reserve' %}">Reservations</a></li>
           <li></li>
-          <li><a href="#">Sign up</a></li>
-          <li><a href="#">Log in</a></li>
+
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'account_logout' %}">Log out</a></li>
+          {% else %}
+            <li><a href="{% url 'account_signup' %}">Sign up</a></li>
+            <li><a href="{% url 'account_login' %}">Log in</a></li>
+          {% endif %}
+
         </ul>
       </nav>
     </header>

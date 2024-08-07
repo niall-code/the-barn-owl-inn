@@ -144,6 +144,43 @@ To refine the outcome, I added further HTML tags and attributes and styled them 
 
 ![improved menu display](readme_images/viewable_menu.png)
 
+I can now move my 'View menu list' and 'Update menu' user stories to Done, as all of their acceptance criteria have been met.
+
+### Reservations Page
+
+I repeated the pattern once again of putting appropriate basics in the URL files and views file as pertains this time to the `reserve` app.
+
+#### User Authentication
+
+Since much of the functionality of the reservations section will be dependent on a user being registered and authenticated, it was now time to move the 'Sign up/Log in' user story to 'In Progress'.
+
+![]()
+![]()
+
+I then installed the required user authentication package:
+
+> `pip3 install django-allauth~=0.57.0`
+>
+> `pip3 freeze --local > requirements.txt`
+>
+> `pip3 show django-allauth`
+>
+> `cp -r <Location>/allauth/templates/* ./templates/`
+>
+> `pip3 manage.py showmigrations`
+>
+> `pip3 manage.py migrate`
+
+On the first day of attempting the migrate command, there was an external database problem. Not definitively knowing that, I tried extensively to get it to work, but ultimately had to resume work the following day when the issue elsewhere had been addressed. It was at least reassuring that the command failing was no fault of my own.
+
+I had also made appropriate additions to the settings file:
+
+![additions to settings file](readme_images/allauth_settings.png)
+
+At this time, I could give a real href to the remaining navbar links in `base.html`. DTL if-else logic will mean that an unauthenticated user will see 'Sign up' and 'Log in' but a logged-in user will just see 'Log out' instead.
+
+I also removed some of the automatic code in some of the relevant Django allauth template files, so that allauth could integrate better with my existing project. For example, I removed the rest of a path in front of 'base' so that my own custom base template is referenced instead where relevant.
+
 ## Deployment Stage
 
 
