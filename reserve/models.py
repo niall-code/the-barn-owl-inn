@@ -7,7 +7,7 @@ class Table(models.Model):
     seats = models.IntegerField(blank=False)
 
     def __str__(self):
-        return f"Table {self.number}"
+        return f"{self.number}"
 
 
 class Reservation(models.Model):

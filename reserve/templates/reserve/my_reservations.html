@@ -2,4 +2,19 @@
 {% load static %}
 {% block content %}
 
+  {% for reservation in reservations %}
+    {% if reservation.reserver == user %}
+      <div>
+        {{ reservation }}
+        {% for table in reservation.tables.all %}
+          <p>{{ table.number }}</p>
+        {% endfor %}
+        <p>{{ reservation.date }}</p>
+        <p>{{ reservation.start_time }}</p>
+        <p>{{ reservation.duration }}</p>
+        <p>{{ reservation.contact }}</p>
+      </div>
+    {% endif %}
+  {% endfor %}
+
 {% endblock %}

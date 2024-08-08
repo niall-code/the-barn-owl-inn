@@ -154,8 +154,8 @@ I repeated the pattern once again of putting appropriate basics in the URL files
 
 Since much of the functionality of the reservations section will be dependent on a user being registered and authenticated, it was now time to move the 'Sign up/Log in' user story to 'In Progress'.
 
-![]()
-![]()
+![Sign Up user story now in progress](readme_images/kanban_with_signup_moved.png)
+![sign up and log in acceptance criteria](readme_images/signup_login_criteria.png)
 
 I then installed the required user authentication package:
 
@@ -180,6 +180,36 @@ I had also made appropriate additions to the settings file:
 At this time, I could give a real href to the remaining navbar links in `base.html`. DTL if-else logic will mean that an unauthenticated user will see 'Sign up' and 'Log in' but a logged-in user will just see 'Log out' instead.
 
 I also removed some of the automatic code in some of the relevant Django allauth template files, so that allauth could integrate better with my existing project. For example, I removed the rest of a path in front of 'base' so that my own custom base template is referenced instead where relevant.
+
+#### Reservations Page Itself
+
+I moved the remaining user stories to 'In Progress', as all pertain to the reservation functionalities.
+
+![kanban board In Progress column updated](readme_images/all_ustories_in_progress.png)
+
+From the admin panel, I created my instances of Table. In the process, I manually tested that two instances indeed cannot have the same table number, as shown here:
+
+![unique table number required](readme_images/unique_table_number.png)
+
+From the admin panel, I created a dummy reservation.
+
+![creating mock reservation](readme_images/dummy_reservation.png)
+
+In `my_reservations.html`, I utilised DTL logic and variables to simply display the details of this reservation, but only to a logged-in user who was responsible for the reservation's creation.
+
+- The Django Templating Language code:
+
+![initial templating to show or hide reservations](readme_images/reservation_details_dtl.png)
+
+- What was seen when still logged in with the superuser account:
+
+![own reservation visible while logged in](readme_images/own_booking_seen.png)
+
+- What was seen after logging out and again navigating to the reservations page:
+
+![reservation invisible when logged out](readme_images/no_bookings_seen.png)
+
+
 
 ## Deployment Stage
 
