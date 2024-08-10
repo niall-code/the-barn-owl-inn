@@ -1,15 +1,7 @@
-* {
-  padding: 0;
-  margin: 0;
-  font-family: sans-serif;
-  list-style-type: none;
-  text-decoration: none;
-  color: black;
-}
-
 body {
   min-height: 100vh;
   background-color: whitesmoke;
+  margin: 0;
 }
 
 header,
@@ -17,13 +9,25 @@ footer {
   background-color: white;
 }
 
+main {
+  margin-left: 10px;
+}
+
 nav ul {
   display: flex;
   justify-content: space-around;
   padding: 20px 0;
+  margin: 0;
+  list-style-type: none;
+  font-family: sans-serif;
 }
 
-a:hover {
+nav a {
+  text-decoration: none;
+  color: black;
+}
+
+nav a:hover {
   color: blue;
 }
 
