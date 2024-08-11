@@ -4,6 +4,7 @@
 
   {% if user.is_authenticated %}
 
+    <h2>My Existing Reservations</h2>
 
     {% for reservation in reservations %}
       {% if reservation.reserver == user %}
@@ -19,6 +20,14 @@
         </div>
       {% endif %}
     {% endfor %}
+
+    <h2>Create a New Reservation</h2>
+
+    <form method="post" action="">
+      {{ reservation_form }}
+      {% csrf_token %}
+      <button type="submit">Submit</button>
+    </form>
 
   {% else %}
 
