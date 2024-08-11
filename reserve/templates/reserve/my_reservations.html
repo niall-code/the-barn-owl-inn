@@ -2,19 +2,32 @@
 {% load static %}
 {% block content %}
 
-  {% for reservation in reservations %}
-    {% if reservation.reserver == user %}
-      <div>
-        {{ reservation }}
-        {% for table in reservation.tables.all %}
-          <p>{{ table.number }}</p>
-        {% endfor %}
-        <p>{{ reservation.date }}</p>
-        <p>{{ reservation.start_time }}</p>
-        <p>{{ reservation.duration }}</p>
-        <p>{{ reservation.contact }}</p>
-      </div>
-    {% endif %}
-  {% endfor %}
+  {% if user.is_authenticated %}
+
+
+    {% for reservation in reservations %}
+      {% if reservation.reserver == user %}
+        <div>
+          {{ reservation }}
+          {% for table in reservation.tables.all %}
+            <p>{{ table.number }}</p>
+          {% endfor %}
+          <p>{{ reservation.date }}</p>
+          <p>{{ reservation.start_time }}</p>
+          <p>{{ reservation.duration }}</p>
+          <p>{{ reservation.contact }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  {% else %}
+
+    <p>
+      To make a new reservation or view/edit an existing reservation, please 
+      <a href="{{ signup_url }}">sign up</a> or 
+      <a href="{{ login_url }}">log in</a> first.
+    </p>
+
+  {% endif %}
 
 {% endblock %}
