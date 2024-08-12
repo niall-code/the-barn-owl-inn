@@ -24,9 +24,20 @@
     <h2>Create a New Reservation</h2>
 
     <form method="post" action="">
-      {{ reservation_form }}
+
+      <div id="tables-map">
+        {% for table in tables %}
+          <button id="table-{{ table.number }}" class="seats-{{ table.seats }} table">
+            Table {{ table.number }} <br> (seats <b>{{ table.seats }}</b>)
+          </button>
+        {% endfor %}
+      </div>
+
+      {{ reservation_form.as_p }}
       {% csrf_token %}
+
       <button type="submit">Submit</button>
+
     </form>
 
   {% else %}

@@ -8,6 +8,7 @@ from .forms import ReservationForm
 
 def reservations_page(request):
     reservations = Reservation.objects.all()
+    tables = Table.objects.all()
 
     if request.method == "POST":
         reservation_form = ReservationForm(data=request.POST)
@@ -29,5 +30,6 @@ def reservations_page(request):
         {
             'reservations': reservations,
             'reservation_form': reservation_form,
+            'tables': tables,
         },
     )
