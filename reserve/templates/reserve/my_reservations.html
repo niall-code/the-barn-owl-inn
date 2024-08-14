@@ -25,16 +25,18 @@
 
     <form method="post" action="">
 
-      <div id="tables-map">
-        {% for table in tables %}
-          <button id="table-{{ table.number }}" class="seats-{{ table.seats }} table">
-            Table {{ table.number }} <br> (seats <b>{{ table.seats }}</b>)
-          </button>
-        {% endfor %}
-      </div>
+      <div id="tables-map-positioner">
+        <div id="tables-map">
+          {% for table in tables %}
+            <button type="button" id="table-{{ table.number }}" class="seats-{{ table.seats }} table">
+              Table {{ table.number }} <br> (seats <b>{{ table.seats }}</b>)
+            </button>
+          {% endfor %}
+        </div>
 
-      {{ reservation_form.as_p }}
-      {% csrf_token %}
+        {{ reservation_form.as_p }}
+        {% csrf_token %}
+      </div>
 
       <button type="submit">Submit</button>
 
@@ -50,4 +52,8 @@
 
   {% endif %}
 
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'js/table_select.js' %}"></script>
 {% endblock %}

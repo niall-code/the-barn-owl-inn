@@ -46,9 +46,16 @@ nav a:hover {
 
 /* Table Selection Buttons */
 
+div#tables-map-positioner {
+  position: relative;
+}
+
 div#tables-map {
-  width: 60%;
+  width: 55%;
   background-color: aquamarine;
+  position: absolute;
+  top: 75px;
+  left: 250px;
 }
 
 button.table {

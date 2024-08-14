@@ -209,7 +209,55 @@ In `my_reservations.html`, I utilised DTL logic and variables to simply display 
 
 ![reservation invisible when logged out](readme_images/no_bookings_seen.png)
 
+#### Login Prompt
 
+I added a piece of logic such that, when navigating to the My Reservations page, an unauthenticated user will see a message that they should sign up/log in, whereas a logged-in user will see their existing reservations and - once I have coded it - the form with which they can make a new reservation.
+
+### The Reservation Form
+
+This will be some of the core functionality of my project. I added a ReservationForm class to `reserve/forms.py`, a form element to `reserve/templates/reserve/my_reservations.html`, and an if statement into the reservations_page method in `reserve/views.py`, for handling submission of the completed form - looking to my recent 'Django blog walkthrough project' for a rough guide of how to handle this updating of the database with user-inputted details.
+
+As seen below, I now had a basic but functional reservations form which I could then refine. I had already created a dummy reservation via the admin panel; the second group of reservation details visible here was added to the database with this new reservation form, confirming that the form was indeed functioning.
+
+![simple reservation form](readme_images/basic_form.png)
+
+The first improvement I wanted was to make the date selection easier for the user. I did so via `forms.py`, using Django Forms widgets. The effect was that a calendar-like date selector was now available, like it had been automatically when reserving from the admin panel.
+
+![calendar style date selection](readme_images/date_selector.png)
+
+#### Table Map
+
+I have been intending for the tables to be selected by clicking buttons styled to loosely resemble the corresponding restaurant tables. This is not strictly essential in terms of core functionality, but I believe it would significantly enhance the user experience, introducing a visual aspect to the otherwise abstract thing that is "the reservation" - and also make the project more satisfying to create, fulfilling my initial vision of it. The visual representation of the tables might help customers more confidently choose what tables they want, since their relative size will be visible and - if I am able in the available time to position the buttons as I originally imagined - their location within the restaurant could be perceptible too.
+
+As a first step towards this, in `my_reservations.html`, I added a div with an ID of 'tables-map' that contains multiple buttons. With DTL logic and variables, my instances of Table are iterated through and the relevant table number and seating capacity is shown on each button. I then resized these appropriately in `static/css/style.css`.
+
+![styled but inactive table select buttons](readme_images/sized_table_buttons.png)
+
+Again using widgets, I made the form's current table selector into a checkbox format. It will be a more user-friendly fallback if the tables map system cannot come to fruition within the next 5 remaining days before the project deadline. Additionally, it might be easier for me to code that clicking the tables indirectly clicks discrete checkboxes and vice versa.
+
+I also reordered the form fields so that date and time will be above tables, since my user stories ask that tables can be shown as unavailable within the selected timeslot and this is a prerequisite for that.
+
+### Table Map-Reservation Form Connection
+
+I addded a `{% block script %}` to `base.html`, which in `my_reservations.html` will be filled with a script element with an src of `{% static 'js/table_select.js' %}`.
+
+In `style.css`, I repositioned my tables map diagram to be alongside the table selector checkboxes. I will have to consider responsiveness but this suffices for now.
+
+In `table_select.js`, I experimented extensively with trying to create my desired buttons-to-checkboxes connectivity. A git commit on the 14th of August includes some commented-out code that related to these attempts, which will of course later be either uncommented or removed.
+
+Since my initial all-at-once attempt was not yet working out, I commented everything out and went back to basics. One at a time, I introduced the following three lines of code and checked that they worked. They are not required by my project but demonstrated to me that the JavaScript file was correctly linked up to the Python-served HTML file and could enact simple effects.
+
+> `document.getElementsByTagName("h2")[0].addEventListener("click", function() {this.style.color = "red"});`
+>
+> `document.getElementsByTagName("button")[0].addEventListener("click", function() {this.style.backgroundColor = "blue"});`
+>
+> `document.getElementsByClassName("table")[1].addEventListener("click", function() {this.style.backgroundColor = "green"});`
+
+![checking JavaScript file connected](readme_images/js_experiment_1.png)
+
+Encouraged by this, I built on it by replacing these with code that iterated all of the table selection buttons, attached an event listener to each, checked the clicked button's current background color, and changed it as appropriate, the successful result seen below. It has been relatively long since I have significantly used JavaScript, since the course has recently had a Python focus, but I am quite quickly getting refreshed on JavaScript's differences.
+
+![checking JavaScript color change](readme_images/js_experiment_2.png)
 
 ## Deployment Stage
 
