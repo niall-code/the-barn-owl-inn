@@ -259,6 +259,12 @@ Encouraged by this, I built on it by replacing these with code that iterated all
 
 ![checking JavaScript color change](readme_images/js_experiment_2.png)
 
+I decided that enabling the user to edit their reservations was more crucial than a fancy table selection method, so I put the latter on hold to focus on the former for now.
+
+### Reservation Editing
+
+
+
 ## Deployment Stage
 
 

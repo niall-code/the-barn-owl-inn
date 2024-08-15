@@ -8,22 +8,28 @@
 
     {% for reservation in reservations %}
       {% if reservation.reserver == user %}
+
         <div>
-          {{ reservation }}
+
+          <p id="date{{ reservation.id }}">{{ reservation.date|date:"Y-m-d" }}</p>
+          <p id="time{{ reservation.id }}">{{ reservation.start_time|time:"H:i" }}</p>
+          <p id="length{{ reservation.id }}">{{ reservation.duration }}</p>
           {% for table in reservation.tables.all %}
-            <p>{{ table.number }}</p>
+            <p class="table-for-{{reservation.id}}" data-table-id="id_tables_{{ table.id }}">{{ table.number }}</p>
           {% endfor %}
-          <p>{{ reservation.date }}</p>
-          <p>{{ reservation.start_time }}</p>
-          <p>{{ reservation.duration }}</p>
-          <p>{{ reservation.contact }}</p>
+          <p id="contact{{ reservation.id }}">{{ reservation.contact }}</p>
+
         </div>
+
+        <button class="edit" data-reservation_id="{{ reservation.id }}">Edit</button>
+        <button class="delete" data-reservation_id="{{ reservation.id }}">Delete</button>
+
       {% endif %}
     {% endfor %}
 
     <h2>Create a New Reservation</h2>
 
-    <form method="post" action="">
+    <form method="post" action="" id="reservationForm">
 
       <div id="tables-map-positioner">
         <div id="tables-map">
@@ -38,7 +44,7 @@
         {% csrf_token %}
       </div>
 
-      <button type="submit">Submit</button>
+      <button type="submit" id="submitButton">Submit</button>
 
     </form>
 
@@ -56,4 +62,5 @@
 
 {% block script %}
   <script src="{% static 'js/table_select.js' %}"></script>
+  <script src="{% static 'js/edit_reservation.js' %}"></script>
 {% endblock %}

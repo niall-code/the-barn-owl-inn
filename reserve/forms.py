@@ -1,4 +1,4 @@
-from .models import Reservation
+from .models import Reservation, Table
 from django import forms
 
 
@@ -8,9 +8,12 @@ class ReservationForm(forms.ModelForm):
         fields = ['date', 'start_time', 'duration', 'tables', 'contact',]
         widgets = {
             'date': forms.DateInput(
-                format=('%d-%m-%Y'),
+                format='Y-m-d',
                 attrs={'type': 'date'}
                 ),
-            'start_time': forms.TimeInput(attrs={'type': 'time'}),
+            'start_time': forms.TimeInput(
+                format='HH:mm',
+                attrs={'type': 'time'}
+                ),
             'tables': forms.CheckboxSelectMultiple()
         }

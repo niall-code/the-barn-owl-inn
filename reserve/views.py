@@ -16,6 +16,7 @@ def reservations_page(request):
             new_reservation = reservation_form.save(commit=False)
             new_reservation.reserver = request.user
             new_reservation.save()
+            reservation_form.save_m2m()
 
             messages.add_message(
                 request, messages.SUCCESS,
