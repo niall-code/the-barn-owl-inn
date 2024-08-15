@@ -15,7 +15,7 @@
           <p id="time{{ reservation.id }}">{{ reservation.start_time|time:"H:i" }}</p>
           <p id="length{{ reservation.id }}">{{ reservation.duration }}</p>
           {% for table in reservation.tables.all %}
-            <p class="table-for-{{reservation.id}}" data-table-id="id_tables_{{ table.id }}">{{ table.number }}</p>
+            <p class="table-for-{{ reservation.id }}">{{ table.number }}</p>
           {% endfor %}
           <p id="contact{{ reservation.id }}">{{ reservation.contact }}</p>
 

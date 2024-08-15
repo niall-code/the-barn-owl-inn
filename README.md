@@ -263,7 +263,28 @@ I decided that enabling the user to edit their reservations was more crucial tha
 
 ### Reservation Editing
 
+I created `edit_reservation.js` in `static/js/` (alongside `table_select.js`) and similarly linked to it inside the `{% block script %}`. In the new script file, event listeners are attached to the Edit buttons that will be beneath each existing reservation displayed on the My Reservations page. (I preemptively added Delete buttons at the same time.) When the button is clicked, the details of that reservation will be copied into the form fields. The Submit button will also change to read 'Update'. I added IDs to several elements in `my_reservations.html` to facilitate this, and checked devtools to see what IDs Django had automatically given to the form fields.
 
+![debugging with devtools](readme_images/formatting_alert.png)
+
+A devtools error message alerted me that the formatting of the dates and times was preventing them being transferred to the form fields, which I then addressed in the HTML file by adding pipes to their DTL variables:
+
+`{{ reservation.date|date:"Y-m-d" }}` and `{{ reservation.start_time|time:"H:i" }}`.
+
+Trying to transfer the table numbers to checks in the appropriate checkboxes in the form was presenting challenges. Taking a step back from that, I tried to simply have the length of the list of tables logged to the console. I was surprised to see that the output was 0.
+
+To confirm that an issue with logging to the console was not at fault, I added a temporary Hello World message at the top of the script. (My preferred Hello World is "Can you hear me?" - which is a reference to a TV show called _Person of Interest_.)
+
+I ultimately realised that only my first reservation via the admin panel had a table number appearing on the My Reservations page, while the reservations added with the user-facing form were missing it. This seemed strange, as the form would have been invalid if a value for the table field was not initially acknowledged. I looked into it and determined that it could be remedied just by adding `reservation_form.save_m2m()` in `views.py`. Because the submission to the database was being briefly halted to add the 'reserver' to their reservation data, the code needed this extra step to properly save the ManyToManyField.
+
+This done, I added another new reservation with the form. When I subsequently clicked Edit, all of the other fields were auto-filled into the form and the table field's console log correcly gave an output of 2, reflecting that the reservation had two tables associated with it.
+
+
+Ultimately, I introduced a for loop into the code that, for each table of the reservation, checks the checkbox of the matching table number.
+
+I had mistakenly been under the impression that the automatic ID/primary key of the tables would start from 0. When the checkbox getting checked was out by 1, I realised that this was why. It meant that I did not need to use my otherwise clever solution that I had come up with of giving an element a custom attribute whose value matched the automatic ID of the theoretically corresponding checkbox: `data-table_id="id_tables_{{ table.id }}`.
+
+In `reserve/views.py`, I added a `reservation_edit` method that would handle the update better than reusing the existing form-saving code, by allowing a specific ID to be attached instructing which database entry to alter and finishing with a HTTP redirect back to the standard `/my-reservations` page of the site. I then added the appropriate URL pattern to `reserve/urls.py`.
 
 ## Deployment Stage
 

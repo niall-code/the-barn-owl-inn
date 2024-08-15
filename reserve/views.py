@@ -34,3 +34,16 @@ def reservations_page(request):
             'tables': tables,
         },
     )
+
+
+def reservation_edit(request, reserv_id):
+    if request.method == "POST":
+        reservation_form = ReservationForm(data=request.POST)
+        if reservation_form.is_valid():
+            updated_reservation = reservation_form.save(commit=False)
+            updated_reservation.id = reserv_id
+            updated_reservation.reserver = request.user
+            updated_reservation.save()
+            reservation_form.save_m2m()
+
+    return HttpResponseRedirect('/my-reservations')
