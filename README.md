@@ -286,6 +286,12 @@ I had mistakenly been under the impression that the automatic ID/primary key of 
 
 In `reserve/views.py`, I added a `reservation_edit` method that would handle the update better than reusing the existing form-saving code, by allowing a specific ID to be attached instructing which database entry to alter and finishing with a HTTP redirect back to the standard `/my-reservations` page of the site. I then added the appropriate URL pattern to `reserve/urls.py`.
 
+### Reservation Deleting
+
+I created `delete_reservation.js`, which adds event listeners to the Delete buttons, to show a modal seeking confirmation of intentional deletion. I again added an appropriate path in `urls.py`. The code required in `views.py` was simpler than for editing, since there was not the need to handle each individual form field.
+
+I wanted to use a standard, non-Bootstrap modal because I have not been relying on Bootstrap up to now in this project. I therefore consulted [this W3S page](https://www.w3schools.com/howto/howto_css_modals.asp) and used some of its example CSS.
+
 ## Deployment Stage
 
 
@@ -299,3 +305,5 @@ I named the readme_images directory in a slugignore file, because the screenshot
 ## Credit
 
 - As mentioned above, a relative helped with phrasing and structuring my user stories/acceptance criteria.
+
+- The CSS styling targeting the deletion confirmation modal was sourced from [W3Schools](https://www.w3schools.com/howto/howto_css_modals.asp), as mentioned above.

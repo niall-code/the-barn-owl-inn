@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
@@ -45,5 +45,12 @@ def reservation_edit(request, reserv_id):
             updated_reservation.reserver = request.user
             updated_reservation.save()
             reservation_form.save_m2m()
+
+    return HttpResponseRedirect('/my-reservations')
+
+
+def reservation_delete(request, reserv_id):
+    unwanted_reservation = get_object_or_404(Reservation, pk=reserv_id)
+    unwanted_reservation.delete()
 
     return HttpResponseRedirect('/my-reservations')

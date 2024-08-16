@@ -48,6 +48,18 @@
 
     </form>
 
+
+    <div id="deleteModal" class="modal">
+
+      <!-- class="modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Are you sure you want to delete this reservation?</p>
+        <a href="#" id="deleteConfirm">Delete</a>
+      </div>
+
+    </div>
+
   {% else %}
 
     <p>
@@ -63,4 +75,5 @@
 {% block script %}
   <script src="{% static 'js/table_select.js' %}"></script>
   <script src="{% static 'js/edit_reservation.js' %}"></script>
+  <script src="{% static 'js/delete_reservation.js' %}"></script>
 {% endblock %}
