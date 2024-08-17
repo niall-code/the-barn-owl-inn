@@ -48,6 +48,24 @@
 
     </form>
 
+    <script type="">
+      // Pass reservations to JavaScript
+      let reservations = [
+          {% for reservation in reservations %}
+            {
+                'date': '{{ reservation.date|date:"Y-m-d" }}',
+                'start_time': '{{ reservation.start_time|time:"H:i" }}',
+                'duration': '{{ reservation.duration }}',
+                'tables': [
+                    {% for table in reservation.tables.all %}
+                      '{{ table.id }}',
+                    {% endfor %}
+                ]
+            },
+          {% endfor %}
+      ];
+      // console.log(reservations);
+    </script>
 
     <div id="deleteModal" class="modal">
 
@@ -76,4 +94,47 @@
   <script src="{% static 'js/table_select.js' %}"></script>
   <script src="{% static 'js/edit_reservation.js' %}"></script>
   <script src="{% static 'js/delete_reservation.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log(reservations);
+        let dateInput = document.querySelector('input[name="date"]');
+        let timeInput = document.querySelector('input[name="start_time"]');
+        let durationInput = document.querySelector('select[name="duration"]');
+
+        function checkAvailability() {
+            let selectedDate = dateInput.value;
+            let selectedTime = timeInput.value;
+            let selectedDuration = durationInput.value;
+
+            // gets user-desired start and ending
+            if (selectedDate && selectedTime && selectedDuration) {
+                let selectedStart = new Date(`${selectedDate}T${selectedTime}`);
+                let selectedEnd = new Date(selectedStart.getTime() + selectedDuration * 60 * 60 * 1000);
+
+                isUnavailable(reservations, selectedStart, selectedEnd);
+            };
+        }
+
+        // gets existing starts and endings, compares them
+        function isUnavailable(reservations, selectedStart, selectedEnd) {
+            for (reservation of reservations) {
+                let reservationStart = new Date(`${reservation.date}T${reservation.start_time}`);
+                let reservationEnd = new Date(reservationStart.getTime() + reservation.duration * 60 * 60 * 1000);
+
+                if (selectedStart < reservationEnd || selectedEnd > reservationStart) {
+                    for (table of reservation.tables) {
+                        let checkbox = document.querySelector(`input[type="checkbox"][value="${table}"]`);
+                        checkbox.disabled = true;
+                    };
+                };
+            };
+
+        }
+
+        dateInput.addEventListener('change', checkAvailability);
+        timeInput.addEventListener('change', checkAvailability);
+        durationInput.addEventListener('change', checkAvailability);
+
+    });
+  </script>
 {% endblock %}

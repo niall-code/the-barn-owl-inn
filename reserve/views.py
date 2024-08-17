@@ -23,6 +23,8 @@ def reservations_page(request):
                 'Your reservation has been made'
             )
 
+            # return HttpResponseRedirect('/my-reservations')
+
     reservation_form = ReservationForm()
 
     return render(
