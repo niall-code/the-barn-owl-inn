@@ -34,6 +34,13 @@ nav a:hover {
   color: blue;
 }
 
+/* Home page */
+
+#logo {
+  width: 25%;
+  margin-top: 10px;
+}
+
 /* Menu page */
 
 #menu h2,
@@ -120,5 +127,11 @@ div#tables-map-positioner {
 @media screen and (max-width: 1024px) {
   #tables-map {
     display: none;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  #logo {
+    width: 50%;
   }
 }
