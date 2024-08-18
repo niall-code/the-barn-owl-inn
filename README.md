@@ -12,6 +12,10 @@ I sketched initial wireframes of the home page and of the tables selection scree
 
 ![wireframes](readme_images/wireframe.jpg)
 
+After having begun development, once I had a clearer idea of what my project could realistically look like, I had updated and added to my wireframes.
+
+![expanded wireframes](readme_images/wireframes_2.jpg)
+
 ### User Stories/Acceptance Criteria
 
 I planned my user stories and their acceptance criteria on paper, with some conversational assistance from a relative - who has experience of converting ideas in to formulaic written forms. I then transferred them to a GitHub Projects kanban board.
