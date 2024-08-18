@@ -44,6 +44,15 @@ nav a:hover {
   padding: 10px;
 }
 
+
+div.prior-reservation {
+  border: 1px solid black;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+}
+
+
 /* Table Selection Buttons */
 
 div#tables-map-positioner {

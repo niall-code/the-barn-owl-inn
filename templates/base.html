@@ -26,16 +26,16 @@
     <header>
       <nav>
         <ul>
-          <li><a href="{{ home_url }}">Home</a></li>
-          <li><a href="{{ menu_url }}">Menu</a></li>
-          <li><a href="{{ reserve_url }}">Reservations</a></li>
+          <li><a href="{{ home_url }}" aria-label="Go to the home page">Home</a></li>
+          <li><a href="{{ menu_url }}" aria-label="Go to the restaurant menu page">Menu</a></li>
+          <li><a href="{{ reserve_url }}" aria-label="Go to the reservations system page">Reservations</a></li>
           <li></li>
 
           {% if user.is_authenticated %}
-            <li><a href="{{ logout_url }}">Log out</a></li>
+            <li><a href="{{ logout_url }}" aria-label="Log out">Log out</a></li>
           {% else %}
-            <li><a href="{{ signup_url }}">Sign up</a></li>
-            <li><a href="{{ login_url }}">Log in</a></li>
+            <li><a href="{{ signup_url }}" aria-label="Go to the signup page">Sign up</a></li>
+            <li><a href="{{ login_url }}" aria-label="Go to the login page">Log in</a></li>
           {% endif %}
 
         </ul>

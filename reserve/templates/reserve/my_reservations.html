@@ -3,87 +3,90 @@
 {% block content %}
 
   {% if user.is_authenticated %}
+    <section aria-labelledby="existing-heading">
+      <h2 id="existing-heading">My Existing Reservations</h2>
 
-    <h2>My Existing Reservations</h2>
+      {% for reservation in reservations %}
+        {% if reservation.reserver == user %}
 
-    {% for reservation in reservations %}
-      {% if reservation.reserver == user %}
+          <div class="prior-reservation">
 
-        <div>
+            Date:<p id="date{{ reservation.id }}">{{ reservation.date|date:"Y-m-d" }}</p>
+            Time:<p id="time{{ reservation.id }}">{{ reservation.start_time|time:"H:i" }}</p>
+            Duration:<p id="length{{ reservation.id }}">{{ reservation.duration }}</p>
+            Table(s):
+            {% for table in reservation.tables.all %}
+              <p class="table-for-{{ reservation.id }}">{{ table.number }}</p>
+            {% endfor %}
+            Phone number:
+            <p id="contact{{ reservation.id }}">{{ reservation.contact }}</p>
 
-          <p id="date{{ reservation.id }}">{{ reservation.date|date:"Y-m-d" }}</p>
-          <p id="time{{ reservation.id }}">{{ reservation.start_time|time:"H:i" }}</p>
-          <p id="length{{ reservation.id }}">{{ reservation.duration }}</p>
-          {% for table in reservation.tables.all %}
-            <p class="table-for-{{ reservation.id }}">{{ table.number }}</p>
-          {% endfor %}
-          <p id="contact{{ reservation.id }}">{{ reservation.contact }}</p>
+            <button class="edit" data-reservation_id="{{ reservation.id }}" aria-label="Edit this reservation">Edit</button>
+            <button class="delete" data-reservation_id="{{ reservation.id }}" aria-label="Delete this reservation">Delete</button>
 
+          </div>
+
+        {% endif %}
+      {% endfor %}
+    </section>
+
+    <section aria-labelledby="new-reservation">
+      <h2 id="new-reservation">Create or Edit a Reservation</h2>
+
+      <form method="post" action="" id="reservationForm" aria-label="Reservation Form">
+
+        <div id="tables-map-positioner">
+          <div id="tables-map">
+            {% for table in tables %}
+              <button type="button" id="table-{{ table.number }}" class="seats-{{ table.seats }} table">
+                Table {{ table.number }} <br> (seats <b>{{ table.seats }}</b>)
+              </button>
+            {% endfor %}
+          </div>
+
+          {{ reservation_form.as_p }}
+          {% csrf_token %}
         </div>
 
-        <button class="edit" data-reservation_id="{{ reservation.id }}">Edit</button>
-        <button class="delete" data-reservation_id="{{ reservation.id }}">Delete</button>
+        <button type="submit" id="submitButton" aria-label="Submit reservation form">Submit</button>
 
-      {% endif %}
-    {% endfor %}
+      </form>
 
-    <h2>Create a New Reservation</h2>
+      <script type="">
+        // Pass reservations to JavaScript
+        let reservations = [
+            {% for reservation in reservations %}
+              {
+                  'date': '{{ reservation.date|date:"Y-m-d" }}',
+                  'start_time': '{{ reservation.start_time|time:"H:i" }}',
+                  'duration': '{{ reservation.duration }}',
+                  'tables': [
+                      {% for table in reservation.tables.all %}
+                        '{{ table.id }}',
+                      {% endfor %}
+                  ]
+              },
+            {% endfor %}
+        ];
+      </script>
 
-    <form method="post" action="" id="reservationForm">
+      <div id="deleteModal" class="modal">
 
-      <div id="tables-map-positioner">
-        <div id="tables-map">
-          {% for table in tables %}
-            <button type="button" id="table-{{ table.number }}" class="seats-{{ table.seats }} table">
-              Table {{ table.number }} <br> (seats <b>{{ table.seats }}</b>)
-            </button>
-          {% endfor %}
+        <div class="modal-content">
+          <span class="close" aria-label="Close modal">&times;</span>
+          <p>Are you sure you want to delete this reservation?</p>
+          <a href="#" id="deleteConfirm" aria-label="Confirm delete">Delete</a>
         </div>
 
-        {{ reservation_form.as_p }}
-        {% csrf_token %}
       </div>
-
-      <button type="submit" id="submitButton">Submit</button>
-
-    </form>
-
-    <script type="">
-      // Pass reservations to JavaScript
-      let reservations = [
-          {% for reservation in reservations %}
-            {
-                'date': '{{ reservation.date|date:"Y-m-d" }}',
-                'start_time': '{{ reservation.start_time|time:"H:i" }}',
-                'duration': '{{ reservation.duration }}',
-                'tables': [
-                    {% for table in reservation.tables.all %}
-                      '{{ table.id }}',
-                    {% endfor %}
-                ]
-            },
-          {% endfor %}
-      ];
-      // console.log(reservations);
-    </script>
-
-    <div id="deleteModal" class="modal">
-
-      <!-- class="modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Are you sure you want to delete this reservation?</p>
-        <a href="#" id="deleteConfirm">Delete</a>
-      </div>
-
-    </div>
+    </section>
 
   {% else %}
 
     <p>
       To make a new reservation or view/edit an existing reservation, please 
-      <a href="{{ signup_url }}">sign up</a> or 
-      <a href="{{ login_url }}">log in</a> first.
+      <a href="{{ signup_url }}" aria-label="Goes to the signup page">sign up</a> or 
+      <a href="{{ login_url }}" aria-label="Goes to the login page">log in</a> first.
     </p>
 
   {% endif %}
