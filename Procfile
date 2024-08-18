@@ -1,0 +1,1 @@
+web: gunicorn barn_owl_inn.wsgi
