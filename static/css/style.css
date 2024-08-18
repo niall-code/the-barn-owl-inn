@@ -59,47 +59,11 @@ div#tables-map-positioner {
   position: relative;
 }
 
-div#tables-map {
+#tables-map {
   width: 55%;
-  background-color: aquamarine;
   position: absolute;
   top: 75px;
   left: 250px;
-}
-
-button.table {
-  background-color: burlywood;
-  margin: 5px;
-}
-
-button.seats-2 {
-  height: 60px;
-  width: 80px;
-  border-radius: 15px;
-}
-
-button.seats-3 {
-  height: 90px;
-  width: 90px;
-  border-radius: 50px;
-}
-
-button.seats-6 {
-  height: 90px;
-  width: 150px;
-  border-radius: 30px;
-}
-
-button.seats-9 {
-  height: 100px;
-  width: 190px;
-  border-radius: 40px;
-}
-
-button.seats-12 {
-  height: 120px;
-  width: 240px;
-  border-radius: 40px;
 }
 
 
@@ -148,5 +112,11 @@ button.seats-12 {
     margin: auto;
     border: 0.5px solid tan;
     background-color: blanchedalmond;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  #tables-map {
+    display: none;
   }
 }

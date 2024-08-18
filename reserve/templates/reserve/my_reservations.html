@@ -36,13 +36,12 @@
       <form method="post" action="" id="reservationForm" aria-label="Reservation Form">
 
         <div id="tables-map-positioner">
-          <div id="tables-map">
+          <img src="{% static 'images/tables_map.png' %}" alt="restaurant tables graphic" id="tables-map">
+          <p>
             {% for table in tables %}
-              <button type="button" id="table-{{ table.number }}" class="seats-{{ table.seats }} table">
-                Table {{ table.number }} <br> (seats <b>{{ table.seats }}</b>)
-              </button>
+              &#8226; Table {{ table.number }} seats <b>{{ table.seats }}</b> 
             {% endfor %}
-          </div>
+          </p>
 
           {{ reservation_form.as_p }}
           {% csrf_token %}
