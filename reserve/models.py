@@ -34,7 +34,7 @@ class Reservation(models.Model):
         choices=[(2, "2 hours"), (4, "4 hours")],
         blank=False
     )
-    contact = models.CharField()
+    mobile = models.CharField(max_length=20, blank=False)
 
     def __str__(self):
         return f"{self.reserver} | {self.date}"

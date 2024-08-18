@@ -8,7 +8,7 @@ class ReservationForm(forms.ModelForm):
     """
     class Meta:
         model = Reservation
-        fields = ['date', 'start_time', 'duration', 'tables', 'contact',]
+        fields = ['date', 'start_time', 'duration', 'tables', 'mobile',]
         widgets = {
             'date': forms.DateInput(
                 format='Y-m-d',
