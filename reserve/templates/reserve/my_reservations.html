@@ -111,6 +111,11 @@
                 let selectedStart = new Date(`${selectedDate}T${selectedTime}`);
                 let selectedEnd = new Date(selectedStart.getTime() + selectedDuration * 60 * 60 * 1000);
 
+                let checkboxReset = document.querySelectorAll('input[type="checkbox"]');
+                for (checkbox of checkboxReset) {
+                    checkbox.disabled = false;
+                };
+
                 isUnavailable(reservations, selectedStart, selectedEnd);
             };
         }
@@ -121,7 +126,7 @@
                 let reservationStart = new Date(`${reservation.date}T${reservation.start_time}`);
                 let reservationEnd = new Date(reservationStart.getTime() + reservation.duration * 60 * 60 * 1000);
 
-                if (selectedStart < reservationEnd || selectedEnd > reservationStart) {
+                if ((reservationStart <= selectedStart && selectedStart > reservationStart) || (reservationStart < selectedEnd && selectedEnd <= reservationEnd)) {
                     for (table of reservation.tables) {
                         let checkbox = document.querySelector(`input[type="checkbox"][value="${table}"]`);
                         checkbox.disabled = true;
