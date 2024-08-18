@@ -11,7 +11,7 @@ header {
 }
 
 main {
-  margin-left: 10px;
+  margin: 10px;
 }
 
 /* Navigation bar */
@@ -38,7 +38,8 @@ nav a:hover {
 
 #logo {
   width: 25%;
-  margin-top: 10px;
+  display: block;
+  margin: 10% auto;
 }
 
 /* Menu page */
@@ -115,6 +116,13 @@ div#tables-map-positioner {
 
 /* Media queries */
 
+@media screen and (max-width: 425px) {
+  #logo {
+    width: 75%;
+    margin: 40% auto;
+  }
+}
+
 @media screen and (min-width: 900px) {
   #menu {
     width: 30%;
@@ -127,11 +135,5 @@ div#tables-map-positioner {
 @media screen and (max-width: 1024px) {
   #tables-map {
     display: none;
-  }
-}
-
-@media screen and (max-width: 425px) {
-  #logo {
-    width: 50%;
   }
 }
