@@ -91,6 +91,11 @@ def reservation_edit(request, reserv_id):
             updated_reservation.save()
             reservation_form.save_m2m()
 
+            messages.add_message(
+                request, messages.SUCCESS,
+                'Your reservation has been updated'
+            )
+
     return HttpResponseRedirect('/my-reservations')
 
 
@@ -112,5 +117,10 @@ def reservation_delete(request, reserv_id):
 
     unwanted_reservation = get_object_or_404(Reservation, pk=reserv_id)
     unwanted_reservation.delete()
+
+    messages.add_message(
+        request, messages.SUCCESS,
+            'The reservation has been deleted'
+        )
 
     return HttpResponseRedirect('/my-reservations')

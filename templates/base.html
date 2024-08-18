@@ -45,6 +45,21 @@
     </header>
 
     <main>
+      <!-- Display Django messages -->
+      <div id="alerts-container">
+
+        {% for message in messages %}
+
+          <div class="alert {{ message.tags }}" role="alert">
+            {{ message }}
+            <!-- Inline JS to refresh page -->
+            <button type="button" onclick="location.reload()" aria-label="Close message">X</button>
+          </div>
+
+        {% endfor %}
+
+      </div>
+
       {% block content %}
       {% endblock %}
     </main>
