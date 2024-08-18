@@ -3,13 +3,15 @@
 {% block content %}
 
   {% if user.is_authenticated %}
+
+    <!-- Existing Reservations section -->
     <section aria-labelledby="existing-heading">
       <h2 id="existing-heading">My Existing Reservations</h2>
 
       {% for reservation in reservations %}
         {% if reservation.reserver == user %}
 
-          <div class="prior-reservation">
+          <div class="prior-reservation"> <!-- Styled with border -->
 
             Date:<p id="date{{ reservation.id }}">{{ reservation.date|date:"Y-m-d" }}</p>
             Time:<p id="time{{ reservation.id }}">{{ reservation.start_time|time:"H:i" }}</p>
@@ -21,6 +23,7 @@
             Phone number:
             <p id="contact{{ reservation.id }}">{{ reservation.contact }}</p>
 
+            <!-- Edit and Delete buttons -->
             <button class="edit" data-reservation_id="{{ reservation.id }}" aria-label="Edit this reservation">Edit</button>
             <button class="delete" data-reservation_id="{{ reservation.id }}" aria-label="Delete this reservation">Delete</button>
 
@@ -30,29 +33,34 @@
       {% endfor %}
     </section>
 
+    <!-- Reservation Form section -->
     <section aria-labelledby="new-reservation">
       <h2 id="new-reservation">Create or Edit a Reservation</h2>
 
       <form method="post" action="" id="reservationForm" aria-label="Reservation Form">
 
         <div id="tables-map-positioner">
+          <!-- Desktop-only tables diagram -->
           <img src="{% static 'images/tables_map.png' %}" alt="restaurant tables graphic" id="tables-map">
+          <!-- Text from tables diagram, for when absent or unseen -->
           <p>
             {% for table in tables %}
               &#8226; Table {{ table.number }} seats <b>{{ table.seats }}</b> 
             {% endfor %}
           </p>
 
+          <!-- Django form -->
           {{ reservation_form.as_p }}
           {% csrf_token %}
         </div>
 
+        <!-- Form submit button -->
         <button type="submit" id="submitButton" aria-label="Submit reservation form">Submit</button>
 
       </form>
 
+      <!-- Internal JS island - converts DTL variable to JS -->
       <script type="">
-        // Pass reservations to JavaScript
         let reservations = [
             {% for reservation in reservations %}
               {
@@ -69,6 +77,7 @@
         ];
       </script>
 
+      <!-- Deletion confirmation modal -->
       <div id="deleteModal" class="modal">
 
         <div class="modal-content">
@@ -82,6 +91,7 @@
 
   {% else %}
 
+    <!-- Unauthenticated user login prompt -->
     <p>
       To make a new reservation or view/edit an existing reservation, please 
       <a href="{{ signup_url }}" aria-label="Goes to the signup page">sign up</a> or 
@@ -93,17 +103,35 @@
 {% endblock %}
 
 {% block script %}
-  <script src="{% static 'js/table_select.js' %}"></script>
+
+  <!-- External JS for Edit and Delete buttons -->
   <script src="{% static 'js/edit_reservation.js' %}"></script>
   <script src="{% static 'js/delete_reservation.js' %}"></script>
+
+  <!-- Internal JS for live disabling/enabling of checkboxes -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+        /**
+         * If date, time, and duration form fields are populated,
+         * whenever there is a change in those fields' values:
+         * - Get the form field values
+         * - Compare them to the corresponding values of other reservations
+         * - If date and time clash, disable checkboxes of unavailable tables
+        */
+
         console.log(reservations);
         let dateInput = document.querySelector('input[name="date"]');
         let timeInput = document.querySelector('input[name="start_time"]');
         let durationInput = document.querySelector('select[name="duration"]');
 
         function checkAvailability() {
+            /**
+             * Reads values of form fields.
+             * Converts user-supplied date and time to Unix time.
+             * Resets all checkboxes to enabled.
+             * Calls the isUnavailable() function.
+            */
+
             let selectedDate = dateInput.value;
             let selectedTime = timeInput.value;
             let selectedDuration = durationInput.value;
@@ -124,6 +152,14 @@
 
         // gets existing starts and endings, compares them
         function isUnavailable(reservations, selectedStart, selectedEnd) {
+            /**
+             * For each reservation:
+             * Converts date and time to Unix time.
+             * Compares time to user-requested time slot.
+             * If there is overlap, disables checkboxes matching
+             *   reservation's table numbers.
+            */
+
             for (reservation of reservations) {
                 let reservationStart = new Date(`${reservation.date}T${reservation.start_time}`);
                 let reservationEnd = new Date(reservationStart.getTime() + reservation.duration * 60 * 60 * 1000);
@@ -144,4 +180,5 @@
 
     });
   </script>
+
 {% endblock %}

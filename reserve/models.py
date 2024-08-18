@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 class Table(models.Model):
+    """
+    A class to represent a Table at the restaurant.
+    """
     number = models.IntegerField(blank=False, unique=True)
     seats = models.IntegerField(blank=False)
 
@@ -11,6 +14,9 @@ class Table(models.Model):
 
 
 class Reservation(models.Model):
+    """
+    A class to represent a customer's Reservation.
+    """
     reserver = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

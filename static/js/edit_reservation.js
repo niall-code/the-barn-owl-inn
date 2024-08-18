@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+    /**
+     * Initializes edit functionality for Edit buttons.
+     * 
+     * For each button of `editButtons`:
+     * - When clicked, gets the ID of the targeted reservation
+     * - Copies that existing reservation's text into the form fields
+     *   (including checking the appropriate table number checkboxes)
+     * - Changes Submit button text to "Update"
+     * - Sets the form's action to `edit_reservation/<the reservation ID>`
+    */
 
     let editButtons = document.getElementsByClassName("edit");
     let reservationForm = document.getElementById("reservationForm");

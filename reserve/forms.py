@@ -3,6 +3,9 @@ from django import forms
 
 
 class ReservationForm(forms.ModelForm):
+    """
+    A class to represent the Reservation Form.
+    """
     class Meta:
         model = Reservation
         fields = ['date', 'start_time', 'duration', 'tables', 'contact',]

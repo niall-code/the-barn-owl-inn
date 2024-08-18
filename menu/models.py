@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Dish(models.Model):
+    """
+    A class to represent a Dish, or menu item.
+    """
     name = models.CharField(max_length=100, blank=False, unique=True)
     course = models.IntegerField(
         choices=[(1, "Starters"), (2, "Main Course"), (3, "Desserts")],

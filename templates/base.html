@@ -24,12 +24,13 @@
   <body>
 
     <header>
+      <!-- Navigation bar -->
       <nav>
         <ul>
           <li><a href="{{ home_url }}" aria-label="Go to the home page">Home</a></li>
           <li><a href="{{ menu_url }}" aria-label="Go to the restaurant menu page">Menu</a></li>
           <li><a href="{{ reserve_url }}" aria-label="Go to the reservations system page">Reservations</a></li>
-          <li></li>
+          <li></li> <!-- Empty <li> for spacing effect -->
 
           {% if user.is_authenticated %}
             <li><a href="{{ logout_url }}" aria-label="Log out">Log out</a></li>
@@ -46,10 +47,6 @@
       {% block content %}
       {% endblock %}
     </main>
-
-    <footer>
-
-    </footer>
 
     {% block script %} {% endblock %}
   </body>
