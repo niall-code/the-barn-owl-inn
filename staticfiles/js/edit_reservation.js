@@ -12,22 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let editButtons = document.getElementsByClassName("edit");
     let reservationForm = document.getElementById("reservationForm");
+    // Locates form fields
     let formDate = document.getElementById("id_date");
     let formTime = document.getElementById("id_start_time");
     let formLength = document.getElementById("id_duration");
-    let formContact = document.getElementById("id_contact");
+    let formMobile = document.getElementById("id_mobile");
     let submitButton = document.getElementById("submitButton");
 
     for (let button of editButtons) {
         button.addEventListener("click", (e) => {
             let reservId = e.target.getAttribute("data-reservation_id");
 
+            // Gets details of existing reservation
             let reservationDate = document.getElementById(`date${reservId}`).innerText;
             let reservationTime = document.getElementById(`time${reservId}`).innerText;
             let reservationLength = document.getElementById(`length${reservId}`).innerText;
             let reservationTables = document.getElementsByClassName(`table-for-${reservId}`).length;
-            let reservationContact = document.getElementById(`contact${reservId}`).innerText;
+            let reservationMobile = document.getElementById(`mobile${reservId}`).innerText;
 
+            // Sets form field values identically
             formDate.value = reservationDate;
             formTime.value = reservationTime;
             formLength.value = reservationLength;
@@ -36,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let checkbox = document.querySelector(`input[type="checkbox"][value="${checkboxValue}"]`);
                 checkbox.click();
             };
-            formContact.value = reservationContact;
+            formMobile.value = reservationMobile;
 
             submitButton.innerText = "Update";
             reservationForm.setAttribute("action", `edit_reservation/${reservId}`);
