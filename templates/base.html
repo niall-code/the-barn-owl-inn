@@ -45,6 +45,11 @@
     </header>
 
     <main>
+      <!-- Username display -->
+      {% if user.is_authenticated %}
+        <span id="shown-username">Logged in as <b>{{ user }}</b></span>
+      {% endif %}
+
       <!-- Display Django messages -->
       <div id="alerts-container">
 

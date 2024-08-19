@@ -51,6 +51,13 @@ nav a:hover {
   background-color: rgb(206, 245, 206);
 }
 
+/* Username display */
+
+#shown-username {
+  color: grey;
+  font-size: smaller;
+}
+
 /* Home page */
 
 #logo {
@@ -150,6 +157,11 @@ div#tables-map-positioner {
 }
 
 @media screen and (max-width: 1024px) {
+  #logo {
+    width: 60%;
+    margin: 20% auto;
+  }
+
   #tables-map {
     display: none;
   }
