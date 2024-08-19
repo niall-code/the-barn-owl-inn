@@ -1,8 +1,10 @@
 # The Barn Owl Inn
 
-![]()
+![responsiveness mockup](readme_images/responsive_mockup.png)
 
+The Barn Owl Inn is a Heroku-hosted restaurant website coded with a Django framework and featuring a reservations system that connects with a PostgreSQL cloud database.
 
+[The deployed project can be found here.](https://barn-owl-inn-722c3cc05a50.herokuapp.com/)
 
 ## Design Stage
 
@@ -296,13 +298,137 @@ I created `delete_reservation.js`, which adds event listeners to the Delete butt
 
 I wanted to use a standard, non-Bootstrap modal because I have not been relying on Bootstrap up to now in this project. I therefore consulted [this W3S page](https://www.w3schools.com/howto/howto_css_modals.asp) and used some of its example CSS.
 
+### Everything Else
+
+On the day before the project deadline, I managed to surge through a lot of remaining aspects.
+
+#### Fixed If-Statement
+
+I realised that the logic in my reservations non-overlap system was flawed in that all reservations would register as clashing with each other because the entire past and future were accidentally implied in the rule. I slightly increased the complexity of the if logic to eliminate this problem.
+
+#### Improved Accessibility
+
+I added aria labelling to links and sections in order to improve the experience for users reliant on a screen reader.
+
+#### Rejected Table Map Buttons
+
+I decided that my original hope of having the styled table-representing buttons also operate the checkboxes was too ambitious in the available timeframe and probably not of much added value anyway. The checkboxes are a sound means of selecting the desired tables. The appearance of the table map remains in the form of a simple image, and the useful text included in it (regarding seat numbers) is also seen as text. Therefore, the image can be absent on small screens for better mobile responsiveness, and screen reader accessiiblity is improved too.
+
+I had been considering having a restaurant map also on the home page but again decided that it was unrealistic in the time available and probably unnecessary anyway. The aesthetic logo on the landing page suffices for making it a pleasing start point from which to navigate to the wanted functionality of the reservations or menu pages.
+
+#### Docstrings/Comments
+
+Added docstrings and comments where warranted, across several files.
+
+#### Logo & Favicon
+
+I created and included the home page logo, which I am quite pleased with the look of. I also created and included a miniaturised favicon version of it. The websites used are included in the credits section below.
+
+#### Staticfiles
+
+I pip-installed Whitenoise and collected my static files (images, CSS, and JavaScript): `python3 manage.py collectstatic`. This would be necessary once the project was deployed to Heroku. Subsequent alterations/additions to the pertinent files would necessitate repeating this command.
+
+#### Django Messages
+
+Into `base.html`, I introduced the  necessary HTML elements and DTL logic and variables to display Django alert messages, then included some success messages in `reserve/views.py` and styling with `static/css/style.css`. I again managed to avoid Bootstrap dependency.
+
+![styling Django message div](readme_images/styled_django_message.png)
+
+#### 'Contact' to 'Mobile'
+
+I edited the Reservation class in `reserve/models.py`, renaming the contact attribute as mobile. I did this because the automatic form field label of the Django form was not descriptive enough, and I changed all references to this attribute to reflect the new name. At the same time, I added a character limit to the field. I ran `python3 manage.py makemigrations` and `... migrate` to send the changes to the database.
+
+#### Username Display
+
+I added a 'Logged in as USERNAME' span to the base template for authenticated users.
+
 ## Deployment Stage
 
+![create heroku app](readme_images/create_heroku_app.png)
 
+From my Heroku dashboard, I clicked 'Create new app'. I entered the app name, barn-owl-inn, and again clicked 'Create app'. I selected GitHub as the deployment method. I added my DATABASE_URL and SECRET_KEY Config Vars, from my git-ignored `env.py` file.
 
-## .gitignore and .slugignore
+I created a Procfile which read `web: gunicorn barn_owl_inn.wsgi`, pip-installed Whitenoise, added its middleware line in `settings.py`, as well as the STATIC_ROOT variable, and ran a collectstatic.
 
+Back in Heroku, I selected the Python buildpack.
 
+![Python buildpack](readme_images/python_buildpack.png)
+
+I then selected my GitHub repository's main branch to deploy from. From this point, I had a live, Heroku-hosted website, though had to repeat the deployment from main a few times after changes to the source code.
+
+[The deployed project can be found here.](https://barn-owl-inn-722c3cc05a50.herokuapp.com/)
+
+## Additional Testing
+
+Much manual testing was conducted in the natural process of finding how to make everything work and being confident enough in its efficacy to commit and deploy it. Some of that testing is highlighted higher in this readme, but some other testing will be mentioned here, together with checking code validators and Lighthouse.
+
+I had manually tested that the form fields were required from the site like they had been from admin.
+
+![form fields required](readme_images/required_fields.png)
+
+I was pleased with my step-by-step testing approach to solving the problem of how to make unavailable tables be non-selectable to avoid double bookings, and I will try to break that down a bit now.
+
+In JavaScript, I got the checkboxes and console-logged the collection. This proved to me that my code was indeed getting the correct group of elements as intended, a prerequisite to all that closely followed. I then had it iterate the collection and console log the number of each checkbox individually. (This step would later become unnecessary, since the checkbox numbers would be based on table numbers retrieved from existing reservations, but at this point it was helpful to my process.) Then, I added in a `.disabled()` method so that each iteration would disable the corresponding checkbox instead of merely naming it in the console. I was glad to find that this step also was successful. Describing it, it sounds like it should have been obvious. However, it demonstrates the efficacy of stepping back and putting the pieces together one by one. This is similar to the Jest testing red-green principle, though on this occasion I did not bring automated testing into it. The image below shows these console outputs and the checkboxes all disabled. Knowing that this part of the code was not problematic, I could then focus on the reservations comparison logic that would discern which boxes actually needing disabling. In short, continuous and thorough manual testing, some of which I was able to properly document, was integral to developing most of the successfully executed aspects of this project.
+
+![console logged numbers, disabled checkboxes](readme_images/all_checkboxes_disabled.png)
+
+Having proof of the checkbox getting and disabling being operational, I moved to testing the next step of reading the user-inputted form field values and checking that there was no problem there either. The screenshot below shows my test code for that phase. For each `checkAvailability`-calling event listener that was already present, I paired with it another that simply logged that input field's value to the console. I changed date and saw a date in the console as expected, then I changed time and saw a time in the console as expected. Both matched the input and were formatted as I anticipated. I could now be confident that the problem was specifically with the lack of sound logic for reservation details comparison.
+
+![testing form field value readable upon change](readme_images/log_changed_field_value.png)
+
+It appears that in that code screenshot, I was still attempting to do the table availability JavaScript in an external file. Somewhere around this time, I transitioned to internal JS - as explained in a readme section below.
+
+Ultimately, I managed to get to a point where, when filling the form to make a new reservation, intentionally overlapping with an existing one, the appropriate checkbox did disable itself, as seen here.
+
+![unavailable table's checkbox disabled](readme_images/single_disabled_box.png)
+
+As mentioned above, the following day I realised that the logic was still flawed but in that it was overidentifying alleged clashes. It took a great deal of thought and some more trial and error, but essentially the solution was for the if statement to be like so:
+
+`if ((reservationStart <= selectedStart && selectedStart > reservationStart) || (reservationStart < selectedEnd && selectedEnd <= reservationEnd)) { ...`
+
+### User Stories Analysis
+
+In the course of the last couple of days' surge of activity, the remaining user stories have been adequately met, so I have moved them all to done and closed the issues, but a breakdown of the user stories and their acceptance criteria and if or to what extent they have been accomplished is here below.
+
+![User Stories Analysis](readme_images/user_stories_review.png)
+
+### Code Validators
+
+#### W3C Markup Validation Service (https://validator.w3.org/)
+
+![HTML validations table](readme_images/html_validator.png)
+
+As seen recorded just above, the three main pages of my website were validated with no errors nor warnings. The My Reservations page had a few things flag, shown just below, but with some commentary for me to add.
+
+![HTML validation warnings](readme_images/w3c_on_reservations.png)
+
+- As I understand it, a blank action attribute means that the form will be sent to the same path as led to this page, as intended, and my forms have been submitting without issue. I also gather that an entirely absent action attribute could potentially be a security issue. Additionally, when the form is used for editing rather than creating, external JavaScript does fill in the action attribute appropriately for that.
+
+- The rogue `<p>` element appears to be part of Django's auto-created form and therefore unalterable by me.
+
+- I added the empty type attribute because there were red error lines underneath my internal JavaScript code that went away when I added that.
+
+- The span is supposed to have the aria-label, because external JavaScript code causes it to function like a close button.
+
+#### W3C CSS Validation Service (https://jigsaw.w3.org/css-validator/)
+
+I copied the contents of my `style.css` file into the Direct Input and was informed "Congratulations! No Error Found."
+
+#### JSHint (https://jshint.com/)
+
+For the contents of my `edit_reservation.js` file, JSHint had 30 suggestions but all bar 3 were merely that something was only available from ES6 onward, which I believe is nearly universal by now. The remainder seemed very minor and not worth spending any time on with just 3 hours left before the project deadline.
+
+### Google Lighthouse
+
+As an authenticated user, I ran my core My Reservations page through Google Lightspace and got excellent scores.
+
+![Lighthouse results](readme_images/lighthouse.png)
+
+## The Internal JS in my_reservations.html
+
+I decided that this was a good idea for this particular project because the HTML file was already able to read existing reservations as a DTL variable, which could easily be converted into JavaScript and utilised to control the form simply and directly without having to pass requests and data around between different parts of the project, potentially between different computer languages in a more convoluted fashion, and with the complication of needing to redirect HTTP responses while trying to fill out a reservation form that could be interfered with.
+
+## .slugignore
 
 I named the readme_images directory in a slugignore file, because the screenshots and photos in this readme will not be required by the deployed site. [Heroku's documentation](https://devcenter.heroku.com/articles/slug-compiler#ignoring-files-with-slugignore) suggests that this should cause that directory's "files to be removed after you push code to Heroku and before the buildpack runs", so that large, unnecessary files are not included.
 
@@ -311,3 +437,9 @@ I named the readme_images directory in a slugignore file, because the screenshot
 - As mentioned above, a relative helped with phrasing and structuring my user stories/acceptance criteria.
 
 - The CSS styling targeting the deletion confirmation modal was sourced from [W3Schools](https://www.w3schools.com/howto/howto_css_modals.asp), as mentioned above.
+
+- The device responsiveness mockup graphic at the top of this readme utilised an [image from Freepik](https://www.freepik.com/free-vector/different-devices-mockup_1075504.htm) made available by [starline](https://www.freepik.com/author/starline).
+
+- My home page logo was created using Adobe Express' [logo maker](https://www.adobe.com/express/create/logo).
+
+- The favicon version of it was then created using [Real Favicon Generator](https://realfavicongenerator.net/).
